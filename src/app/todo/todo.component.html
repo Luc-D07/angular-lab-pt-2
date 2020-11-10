@@ -1,0 +1,38 @@
+<main class="main">
+    <section class="todos-container">
+        <h1>TODO List</h1>
+
+        <form #searchForm="ngForm" (input)="setListSearchTerm(searchForm)">
+            <label for="searchList">Search To-Do List</label>
+            <input type="text" name="searchList" id="searchList" ngModel>
+        </form>
+
+        <p>A place to store your todos</p>
+
+        <form #toDoForm="ngForm" (ngSubmit)="addYourToDo(toDoForm)">
+            <label for="todo">What is your to-do?</label>
+            <input type="text" id="todo" name="todo" ngModel required>
+            <p>Completed?</p>
+            <label for="completed">Completed</label>
+            <input type="radio" name="type" id="completed" value="completed" ngModel required> 
+            <label for="completed">Incomplete</label>
+            <input type="radio" name="type" id="incomplete" value="incomplete" ngModel required>
+            <button [disabled]="toDoForm.invalid">Submit</button>
+        </form>
+
+        <h2>Filter your to-dos</h2>
+
+        <ol>
+        <li *ngFor="let todo of filterList(), index as i">
+            <div class="task-container">
+                <div class="task-start">
+                    <!-- *ngIf="!todo.completed"-----BELONGS BELOW idk if it needs to be there -->
+                    <button *ngIf="!todo.completed" (click)="completeTask(todo)">Complete</button>
+                    <p [ngClass]="{strikethrough: todo.completed}">{{todo.task}}</p>
+                </div>
+                <button (click)="removeTask('todo', i)">X</button>
+            </div>
+        </li>
+        </ol>
+    </section>
+</main>
